@@ -64,6 +64,7 @@ sbi_set_timer(get_cycles() + timebase);
 整个函数的作用是通过获取当前 CPU 周期数，加上一个时间间隔，来计算出下一个时钟事件的时刻，并将该时刻传递给 `sbi_set_timer` 函数进行设置。这样可以实现在指定时间间隔后触发下一个时钟事件的功能。
 
 即每次时钟中断时都要设置一次时钟中断，便于下一次再次触发。累计到100s的时候调用一次`print_ticks()`，打印一次100 ticks，信号计数num+1，随后进入下一轮计数。结果如下
+
 ![测试结果](https://markdown.liuchengtu.com/work/uploads/upload_8527609a1c7a232fafcd8afcb0d0ff30.png)
 
 ## 扩展练习 Challenge1：描述与理解中断流程
