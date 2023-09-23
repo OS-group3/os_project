@@ -65,7 +65,7 @@ sbi_set_timer(get_cycles() + timebase);
 
 即每次时钟中断时都要设置一次时钟中断，便于下一次再次触发。累计到100s的时候调用一次`print_ticks()`，打印一次100 ticks，信号计数num+1，随后进入下一轮计数。结果如下
 
-![测试结果](https://markdown.liuchengtu.com/work/uploads/upload_8527609a1c7a232fafcd8afcb0d0ff30.png)
+![](https://markdown.liuchengtu.com/work/uploads/upload_9038315d009dadb19341ec3d3b62c96f.png)
 
 ## 扩展练习 Challenge1：描述与理解中断流程
 回答：描述ucore中处理中断异常的流程（从异常的产生开始），其中mov a0，sp的目的是什么？SAVE_ALL中寄存器保存在栈中的位置是什么确定的？对于任何中断，__alltraps 中都需要保存所有寄存器吗？请说明理由。
