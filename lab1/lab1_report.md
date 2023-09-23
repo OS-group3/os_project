@@ -13,9 +13,11 @@ make gdb     # 终端2，启动gdb
 ```
 
 由于CPU加电后执行的第一条指令存放于地址`0x1000`中也就是当前pc位置，故执行命令`x/10i  $pc`显示即将执行的10条汇编指令。发现硬件加电后的几条指令所在的位置：0x1000、0x10004、0x10008、0x1000c、0x10010。这前五条指令用于初始化处理器的一些配置，读取了mhartid CSR并执行跳转操作，最后跳转到0x80000000启动Bootloader。
+
 ![加电后的即将执行的十条指令](https://markdown.liuchengtu.com/work/uploads/upload_fc72a96a34493f403d30750f7d0d32c0.png)
 
 之后执行命令`b *0x80200000`在0x80200000地址设置断点并执行命令`c`来让程序从0x80000000运行到0x80200000。
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_36c670c31fc36c71deb165bf4bfcc89a.png)
 
 在最小可执行内核里, 我们主要完成两件事:
@@ -57,6 +59,7 @@ sbi_set_timer(get_cycles() + timebase);
 整个函数的作用是通过获取当前 CPU 周期数，加上一个时间间隔，来计算出下一个时钟事件的时刻，并将该时刻传递给 `sbi_set_timer` 函数进行设置。这样可以实现在指定时间间隔后触发下一个时钟事件的功能。
 
 即每次时钟中断时都要设置一次时钟中断，便于下一次再次触发。累计到100s的时候调用一次`print_ticks()`，打印一次100 ticks，信号计数num+1，随后进入下一轮计数。结果如下
+
 ![测试结果](https://markdown.liuchengtu.com/work/uploads/upload_8527609a1c7a232fafcd8afcb0d0ff30.png)
 
 ## 扩展练习 Challenge1：描述与理解中断流程
