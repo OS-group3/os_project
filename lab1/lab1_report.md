@@ -14,9 +14,11 @@ make gdb     # 终端2，启动gdb
 ```
 
 2. 由于CPU加电后执行的第一条指令存放于地址`0x1000`中也就是当前pc位置，故执行命令`x/10i  $pc`显示即将执行的10条汇编指令。发现硬件加电后的几条指令所在的位置：0x1000、0x10004、0x10008、0x1000c、0x10010。这前五条指令用于初始化处理器的一些配置，读取了mhartid CSR并执行跳转操作，最后跳转到0x80000000启动Bootloader。
+
 ![加电后的即将执行的十条指令](https://markdown.liuchengtu.com/work/uploads/upload_fc72a96a34493f403d30750f7d0d32c0.png)
 
 3. 之后执行命令`b *0x80200000`在0x80200000地址设置断点并执行命令`c`来让程序从0x80000000运行到0x80200000。可以看到此处命令为la sp,bootstacktop，对应到了作为整个内核的入口点的kern/init/entry.S文件中的入口点kern_entry，其作用就是分配好内核栈。之后就是通过命令`j 0x8020000c <kern_init>`跳转到函数kern_init。所以kern_init是真正的入口点。
+
 ![跳转到0x80200000](https://markdown.liuchengtu.com/work/uploads/upload_36c670c31fc36c71deb165bf4bfcc89a.png)
 
 4. 其余分析
