@@ -162,6 +162,7 @@ int which_dev = 0;
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
+	    cprintf("Illegal instruction\n")
             cprintf("Illegal instruction caught at 0x%x\n", tf->epc);
             
             break;
@@ -172,6 +173,7 @@ int which_dev = 0;
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
+            cprintf("breakpoint\n")
             cprintf("breakpoint caught at 0x%x\n", tf->epc);
             break;
         case CAUSE_MISALIGNED_LOAD:
