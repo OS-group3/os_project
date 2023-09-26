@@ -32,7 +32,10 @@ int kern_init(void) {
     clock_init();  // init clock interrupt
 
     intr_enable();  // enable irq interrupt
-    
+
+    uint32_t src, ret;
+    //__asm__ __volatile__("mret"); // 触发非法伪指命异常
+    //__asm__ __volatile__("ebreak"); //触发断点异常
     while (1)
         ;
 }
