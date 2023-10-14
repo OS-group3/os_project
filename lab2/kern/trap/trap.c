@@ -8,8 +8,9 @@
 #include <riscv.h>
 #include <stdio.h>
 #include <trap.h>
-
+#include <sbi.h>
 #define TICK_NUM 100
+volatile size_t num=0;
 
 static void print_ticks() {
     cprintf("%d ticks\n", TICK_NUM);
@@ -22,7 +23,7 @@ static void print_ticks() {
 /* idt_init - initialize IDT to each of the entry points in kern/trap/vectors.S
  */
 void idt_init(void) {
-    /* LAB1 YOUR CODE : STEP 2 */
+    /* LAB1 YOUR CODE :2111673 STEP 2 */
     /* (1) Where are the entry addrs of each Interrupt Service Routine (ISR)?
      *     All ISR's entry addrs are stored in __vectors. where is uintptr_t
      * __vectors[] ?
@@ -126,9 +127,15 @@ void interrupt_handler(struct trapframe *tf) {
             // cprintf("Supervisor timer interrupt\n");
             // clear_csr(sip, SIP_STIP);
             clock_set_next_event();
+
+            if(num==10){//判断打印了几次
+            sbi_shutdown();//关机函数
+            }
             if (++ticks % TICK_NUM == 0) {
                 print_ticks();
+                num++;
             }
+
             break;
         case IRQ_H_TIMER:
             cprintf("Hypervisor software interrupt\n");
@@ -161,8 +168,25 @@ void exception_handler(struct trapframe *tf) {
         case CAUSE_FAULT_FETCH:
             break;
         case CAUSE_ILLEGAL_INSTRUCTION:
+             // 非法指令异常处理
+             /* LAB1 CHALLENGE3   YOUR CODE :2111673  */
+            /*(1)输出指令异常类型（ Illegal instruction）
+             *(2)输出异常指令地址
+             *(3)更新 tf->epc寄存器
+            */        
+            cprintf("Exception type:Illegal instruction\n");
+            cprintf("Illegal instruction caught at 0x%x\n", tf->epc);
+            
             break;
         case CAUSE_BREAKPOINT:
+            //断点异常处理
+            /* LAB1 CHALLLENGE3   YOUR CODE : 2111673 */
+            /*(1)输出指令异常类型（ breakpoint）
+             *(2)输出异常指令地址
+             *(3)更新 tf->epc寄存器
+            */
+            cprintf("Exception type: breakpoint\n");
+            cprintf("breakpoint caught at 0x%x\n", tf->epc);
             break;
         case CAUSE_MISALIGNED_LOAD:
             break;

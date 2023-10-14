@@ -17,7 +17,7 @@ int kern_init(void) {
     extern char edata[], end[];
     memset(edata, 0, end - edata);
     cons_init();  // init the console
-    const char *message = "(THU.CST) os is loading ...\0";
+    const char *message = "(NKU.CST) os is loading ...\0";
     //cprintf("%s\n\n", message);
     cputs(message);
 
@@ -26,14 +26,14 @@ int kern_init(void) {
     // grade_backtrace();
     idt_init();  // init interrupt descriptor table
 
-    pmm_init();  // init physical memory management
-
-    idt_init();  // init interrupt descriptor table
+    pmm_init();  // init physical memory management  主要负责初始化物理内存管理，参考pmm.c
 
     clock_init();   // init clock interrupt
     intr_enable();  // enable irq interrupt
 
-
+    uint32_t src, ret;
+    //__asm__ __volatile__("mret"); // 触发非法伪指命异常
+    //__asm__ __volatile__("ebreak"); //触发断点异常
 
     /* do nothing */
     while (1)
