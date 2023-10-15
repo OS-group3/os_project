@@ -455,13 +455,16 @@ best_fit_nr_free_pages(void) {
 ```
 ### 3.实验结果
 `make`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_a70d64dafbd431cfbf1cc99453b0bce7.png)
 
 ` make qemu`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_e2eedf769744a112aece5bbbda5ce8f1.png)
 ![](https://markdown.liuchengtu.com/work/uploads/upload_02a224689135485f6ca6f9b7b186dfa9.png)
 
 ` make grade`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_51d0f2d07ac9cf599afe1a0e149f361b.png)
 
 ### 4.Best-Fit 算法进一步的改进空间
