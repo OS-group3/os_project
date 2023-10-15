@@ -122,7 +122,7 @@ best_fit_alloc_pages(size_t n) {//用于从一个可用页面的链表中分配�
     struct Page *p = le2page(le, page_link);//将链表节点 le 转换为对应的 Page 结构体p
     if (p->property >= n && p->property - n < min_size) {//确保页面 p 大于或等于n 且p 的大小减去 n 后的大小小于 min_size
         page = p;//指针 page 指向当前找到的页面 p
-        min_size = p->property ;//更新 min_size 为 p 页面的值
+        min_size = p->property -n ;//更新 min_size 为 当前空闲的内存中最小的值
         }
 
     }
