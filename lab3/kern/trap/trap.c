@@ -12,6 +12,7 @@
 #include <riscv.h>
 #include <sbi.h>
 
+int count=0;
 #define TICK_NUM 100
 
 static void print_ticks() {
@@ -148,8 +149,12 @@ void interrupt_handler(struct trapframe *tf) {
             // directly.
             // clear_csr(sip, SIP_STIP);
             clock_set_next_event();
+            if(count==10){//判断打印了几次
+            sbi_shutdown();//关机函数
+            }
             if (++ticks % TICK_NUM == 0) {
                 print_ticks();
+                count++;
             }
             break;
         case IRQ_H_TIMER:
