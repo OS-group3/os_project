@@ -333,14 +333,17 @@ Clock（时钟）和FIFO（先进先出）算法的区别如下所示：
 
 ### 3.实验结果
 `make`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_5590364a808717935f5157bc3c0d6b57.png)
 
 `make qemu`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_8e710391aac0e425af1c37d834c60e8c.png)
 ![](https://markdown.liuchengtu.com/work/uploads/upload_9236c8692a8369f071aa25eec2fc05d6.png)
 ![](https://markdown.liuchengtu.com/work/uploads/upload_4f53958264ee49b4da5076f281560a5d.png)
 
 `make grade`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_5244fb38d6c36571df0ac238b9a9369c.png)
 
 ## 练习5：阅读代码和实现手册，理解页表映射方式相关知识（思考题）
