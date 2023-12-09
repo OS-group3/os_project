@@ -156,13 +156,16 @@ Copy on Write 是读时共享，写时复制机制。多个进程可以读同一
 
 ### 3.实验结果
 `make`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_a00ea59b149fd4269d3d3e1461ab5369.png)
 
 `make qemu`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_2e3c8c3963df1bdffb6113692cc5d265.png)
 ![](https://markdown.liuchengtu.com/work/uploads/upload_c44a86224eca621eb18a4e6203595430.png)
 
 `make grade`
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_b2ee700300254143a725d82c024bbc8e.png)
 
 
