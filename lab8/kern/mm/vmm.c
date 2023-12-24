@@ -451,7 +451,7 @@ do_pgfault(struct mm_struct *mm, uint_t error_code, uintptr_t addr) {
         }
     } else {// if this pte is a swap entry, then load data from disk to a page with phy addr
            // and call page_insert to map the phy addr with logical addr
-        /*LAB3 EXERCISE 3: YOUR CODE
+        /*LAB3 EXERCISE 3: 2111673
         * 请你根据以下信息提示，补充函数
         * 现在我们认为pte是一个交换条目，那我们应该从磁盘加载数据并放到带有phy addr的页面，
         * 并将phy addr与逻辑addr映射，触发交换管理器记录该页面的访问情况
@@ -480,7 +480,20 @@ do_pgfault(struct mm_struct *mm, uint_t error_code, uintptr_t addr) {
             }    
             page_insert(mm->pgdir, page, addr, perm);
             swap_map_swappable(mm, addr, page, 1);*/
-
+            if ((ret = swap_in(mm, addr, &page)) != 0) { // 加载失败
+                cprintf("swap page in do_pgfault failed\n");
+                goto failed;
+            }
+            if (page_insert(mm->pgdir,page, addr, perm) != 0) { // 插入失败
+                cprintf("page_insert failed\n");
+                goto failed;
+            }
+            // if (swap_map_swappable(mm, addr, page, 1) != 0) {//标记失败
+            //     cprintf("swap_map_swappable failed\n");
+            //      goto failed;
+            // }
+            //page_insert(mm->pgdir,page,addr,perm);
+            swap_map_swappable(mm,addr,page,1);  
             page->pra_vaddr = addr;
         } else {
             cprintf("no swap_init_ok but ptep is %x, failed\n", *ptep);

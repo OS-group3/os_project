@@ -233,14 +233,17 @@ void pmm_init(void) {
     // framework.
     // Then pmm can alloc/free the physical memory.
     // Now the first_fit/best_fit/worst_fit/buddy_system pmm are available.
+    
     init_pmm_manager();
 
     // detect physical memory space, reserve already used memory,
     // then use pmm->init_memmap to create free page list
+    
     page_init();
 
     // use pmm->check to verify the correctness of the alloc/free function in a
     // pmm
+    
     check_alloc_page();
 
     // switch from transient boot page directory to refined kernel page directory
@@ -335,7 +338,7 @@ struct Page *get_page(pde_t *pgdir, uintptr_t la, pte_t **ptep_store) {
 //                - and clean(invalidate) pte which is related linear address la
 // note: PT is changed, so the TLB need to be invalidate
 static inline void page_remove_pte(pde_t *pgdir, uintptr_t la, pte_t *ptep) {
-    /*LAB2 EXERCISE 3: YOUR CODE
+    /*LAB2 EXERCISE 3: 2111673
      * Please check if ptep is valid, and tlb must be manually updated if
      * mapping is updated
      *
@@ -472,7 +475,7 @@ int copy_range(pde_t *to, pde_t *from, uintptr_t start, uintptr_t end,
             assert(page != NULL);
             assert(npage != NULL);
             int ret = 0;
-            /* LAB5:EXERCISE2 YOUR CODE
+            /* LAB5:EXERCISE2 2111673
              * replicate content of page to npage, build the map of phy addr of
              * nage with the linear addr start
              *
@@ -490,7 +493,15 @@ int copy_range(pde_t *to, pde_t *from, uintptr_t start, uintptr_t end,
              * (3) memory copy from src_kvaddr to dst_kvaddr, size is PGSIZE
              * (4) build the map of phy addr of  nage with the linear addr start
              */
-            assert(ret == 0);
+                    //1.找寻父进程的内核虚拟页地址
+                void * src_kvaddr = page2kva(page);
+              //2.找寻子进程的内核虚拟页地址   
+              void * dst_kvaddr = page2kva(npage);
+              //3.复制父进程内容到子进程 
+              memcpy(dst_kvaddr, src_kvaddr, PGSIZE);
+             //4.建立物理地址与子进程的页地址起始位置的映射关系
+              ret = page_insert(to, npage, start, perm);
+                 assert(ret == 0);
         }
         start += PGSIZE;
     } while (start != 0 && start < end);
