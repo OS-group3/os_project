@@ -290,14 +290,17 @@ bad_mm:
 ```
 ### 2.实验结果
 ``make``
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_6e7473fce157931abe212d8a63c80844.png)
 
 
 ``make qemu``
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_5d15ef7d66ffd09f38054fdad2ffd20b.png)
 
 
 ``make grade``
+
 ![](https://markdown.liuchengtu.com/work/uploads/upload_385eb2aecab481935b443b4bb2a6082e.png)
 ![](https://markdown.liuchengtu.com/work/uploads/upload_5ebad12b176ee0af79575e18a552f299.png)
 
